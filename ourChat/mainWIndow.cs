@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Sockets;
 using System.IO;
-using System.Net.Sockets;
 
 
 namespace ourChat
@@ -21,9 +20,14 @@ namespace ourChat
         {
             InitializeComponent();
             TcpListener tlis = new TcpListener(8000);
-            tlis.Start();
+            InitTcp();
 
-            init_tcp();            
+            string result = LogIn("2012011514", "net2014");
+            result = CheckFriend("2012011514");
+            result = LogOut("2012011514");
+
+            CloseTcp();
+
         }
     }
 }
