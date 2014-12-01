@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 using System.Net.Sockets;
 using System.IO;
@@ -25,6 +26,13 @@ namespace ourChat
 
         static bool flag_tcp_listened;
         static TcpListener tListener;
+
+        //thread 
+        static Thread listen_thread;
+        static TcpClient[] chat_tcp;
+        static bool[] chat_occupied;
+        static int chat_cap;
+        static int chat_used;
 
         /// <summary>
         /// error code for debuging and messagebox

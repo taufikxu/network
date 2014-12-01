@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 using System.Net.Sockets;
 using System.IO;
@@ -63,6 +64,16 @@ namespace ourChat
                 flag_tcp_connected = false;
             }
         }
+        static void InitThread()
+        {
+            listen_thread = new Thread(new ThreadStart(ListenThread));
+            listen_thread.Start();
+
+            chat_tcp = new TcpClient[4];
+            chat_occupied = new bool[4];
+            chat_cap = 4;
+            chat_used = 0;
+        }
         static void CloseTcp()
         {
             
@@ -84,6 +95,23 @@ namespace ourChat
             {
                 CloseTcp();
             }
+        }
+        static void CloseThread(Thread to_be_end)
+        {
+            try
+            {
+                to_be_end.Abort();
+                to_be_end.Join();
+            }
+            catch
+            {
+                to_be_end.Suspend();
+            }
+        }
+
+        static int AskNewThread()
+        {
+            return 0;
         }
 
         //return ok if successful sent, else return error code
@@ -113,9 +141,13 @@ namespace ourChat
             try
             {
                 Char[] buffer_char = new Char[2048];
-                strReader.Read(buffer_char, 0, buffer_char.Length);
-
-                return (new string(buffer_char)).Replace("\0", "");
+                string result = "";
+                while (result.Length == 0)
+                {
+                    strReader.Read(buffer_char, 0, buffer_char.Length);
+                    result = (new string(buffer_char)).Replace("\0", "");
+                }
+                return result;
             }
             catch
             {
@@ -134,6 +166,11 @@ namespace ourChat
                 return result;
 
             return GetResponse();
+        }
+
+        static void ChatWithFriend(TcpClient fTcp)
+        {
+            return;
         }
 
         //if successful, return "ok", else return the error code
@@ -164,6 +201,19 @@ namespace ourChat
                 return "off";
             else
                 return result;
+        }
+
+        //the main task of listening
+        static void ListenThread()
+        {
+            TcpClient chat_obj;
+            
+            
+            while(true)
+            {
+                chat_obj = tListener.AcceptTcpClient();
+                
+            }
         }
     }
 }
