@@ -13,6 +13,12 @@ namespace ourChat
     partial class mainWindow
     {
         /// <summary>
+        /// my information
+        /// </summary>
+        static string my_name;
+
+
+        /// <summary>
         /// variables for tcp connection, including listener, tcpClient and etc.
         /// </summary>
         static string server_adress = "166.111.180.60";
@@ -20,19 +26,21 @@ namespace ourChat
         static int listen_port = 8000;
 
         static bool flag_tcp_connected;
-        static TcpClient tClient;
-        static NetworkStream netStr;
-        static StreamReader strReader;
+        static TcpClient server_tcp;
+        static NetworkStream netstr_server;
+        static StreamReader strReader_server;
 
         static bool flag_tcp_listened;
         static TcpListener tListener;
 
         //thread 
         static Thread listen_thread;
-        static TcpClient[] chat_tcp;
-        static bool[] chat_occupied;
-        static int chat_cap;
-        static int chat_used;
+        static bool flag_listening;
+        static List<Thread> chat_thread;
+        static List<TcpClient> chat_tcp;
+        static List<bool> chat_occupied;
+        static List<bool> chat_notprocess;
+        static List<string> chat_receive;
 
         /// <summary>
         /// error code for debuging and messagebox

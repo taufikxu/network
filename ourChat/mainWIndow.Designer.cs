@@ -28,20 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.strShow = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
+            // 
+            // strShow
+            // 
+            this.strShow.Location = new System.Drawing.Point(25, 27);
+            this.strShow.Multiline = true;
+            this.strShow.Name = "strShow";
+            this.strShow.Size = new System.Drawing.Size(326, 300);
+            this.strShow.TabIndex = 0;
+            this.strShow.TextChanged += new System.EventHandler(this.strShow_TextChanged);
             // 
             // mainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(282, 253);
+            this.ClientSize = new System.Drawing.Size(372, 370);
+            this.Controls.Add(this.strShow);
             this.Name = "mainWindow";
             this.Text = "mainWindow";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.mainWindow_FormClosed);
+            this.Load += new System.EventHandler(this.mainWindow_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.TextBox strShow;
     }
 }
 

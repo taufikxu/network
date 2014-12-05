@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Threading;
 
 using System.Net.Sockets;
+using System.Net;
 using System.IO;
 
 namespace ourChat
@@ -20,7 +21,7 @@ namespace ourChat
                 if(flag_tcp_listened == true)
                     tListener.Stop();
 
-                tListener = new TcpListener(listen_port);
+                tListener = new TcpListener(IPAddress.Any, listen_port);
                 tListener.Start();
 
                 flag_tcp_listened = true;
@@ -40,7 +41,6 @@ namespace ourChat
                 {
                     MessageBox.Show(e.Message);
                     flag_tcp_connected = false;
-
                 }
             }
         }
@@ -48,11 +48,11 @@ namespace ourChat
         {
             try
             {
-                tClient = new TcpClient(server_adress, server_port);
-                netStr = tClient.GetStream();
-                strReader = new StreamReader(netStr);
+                server_tcp = new TcpClient(server_adress, server_port);
+                netstr_server = server_tcp.GetStream();
+                strReader_server = new StreamReader(netstr_server);
 
-                tClient.ReceiveTimeout = 1000;
+                server_tcp.ReceiveTimeout = 1000;
 
                 InitListener();
 
@@ -67,51 +67,151 @@ namespace ourChat
         static void InitThread()
         {
             listen_thread = new Thread(new ThreadStart(ListenThread));
-            listen_thread.Start();
+            chat_tcp = new List<TcpClient>(0);
+            chat_thread = new List<Thread>(0);
+            chat_notprocess = new List<bool>(0);
+            chat_occupied = new List<bool>(0);
+            chat_receive = new List<string>(0);
 
-            chat_tcp = new TcpClient[4];
-            chat_occupied = new bool[4];
-            chat_cap = 4;
-            chat_used = 0;
-        }
-        static void CloseTcp()
-        {
+            flag_listening = true;
+            listen_thread.Start();
             
+            for (int i = 0; i < chat_notprocess.Count; i++)
+                chat_notprocess[i] = false;
+
+            for (int i = 0; i < chat_occupied.Count; i++)
+                chat_occupied[i] = false;
+        }
+        static void CloseOneTcp(TcpClient tcp)
+        {
+            try
+            {
+                if (tcp == null)
+                    return;
+                tcp.Close();
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.Message);
+                CloseOneTcp(tcp);
+            }
+        }
+        static void CloseMainTcp()
+        {
             try
             {
                 if (flag_tcp_connected == false)
                     return;
 
-                tClient.Close();
-                netStr.Close();
-                strReader.Close();
+                server_tcp.Close();
+                netstr_server.Close();
+                strReader_server.Close();
 
                 tListener.Stop();
 
                 flag_tcp_connected = false;
                 flag_tcp_listened = false;
             }
-            catch
+            catch(Exception e)
             {
-                CloseTcp();
+                MessageBox.Show(e.Message);
+                CloseMainTcp();
             }
         }
-        static void CloseThread(Thread to_be_end)
+        static void CloseOneThread(int num_toend)
         {
             try
             {
-                to_be_end.Abort();
-                to_be_end.Join();
+                chat_occupied[num_toend] = false;
+                //while (chat_thread[num_toend].IsAlive) ;
+                
+                chat_thread[num_toend].Abort();
+                chat_thread[num_toend].Join();
+
+                chat_occupied.RemoveAt(num_toend);
+                chat_thread.RemoveAt(num_toend);
+                chat_tcp.RemoveAt(num_toend);
+
+                chat_receive.RemoveAt(num_toend);
             }
             catch
             {
-                to_be_end.Suspend();
+                
+            }
+        }
+        static void CloseMainThread()
+        {
+            try
+            {
+                flag_listening = false;
+                listen_thread.Abort();
+                listen_thread.Join();
+                return;
+            }
+            catch
+            {
+
             }
         }
 
+        static void RemoveAccordItem(int numb)
+        {
+            chat_notprocess.RemoveAt(numb);
+            chat_occupied.RemoveAt(numb);
+            chat_receive.RemoveAt(numb);
+        }
+
+        static string ReadFromStream(StreamReader strReader, int length=2048)
+        {
+            if (strReader == null)
+                return "";
+
+            char[] buffer = new char[length];
+
+          
+            try
+            {
+                strReader.Read(buffer, 0, buffer.Length);
+                return (new string(buffer)).Replace("\0", "");
+            }
+            catch
+            {
+                return "";
+            }
+
+        }
+
+        static void InitApp()
+        {
+            InitTcp();
+            InitThread();
+        }
+        static void CloseApp()
+        {
+            CloseMainThread();
+
+            for (int i = 0; i < chat_thread.Count; i++)
+                CloseOneThread(i);
+            foreach (TcpClient tcp in chat_tcp)
+                CloseOneTcp(tcp);
+
+            CloseMainTcp();
+            chat_occupied = null;
+            chat_notprocess = null;
+        }
+
+        //找到未处理的线程进行处理。
         static int AskNewThread()
         {
-            return 0;
+            int counter = chat_notprocess.Count-1;
+            for (; counter >= 0;counter-- )
+            {
+                if (chat_notprocess[counter] == false)
+                    continue;
+                else
+                    return counter;
+            }
+            return -1;
         }
 
         //return ok if successful sent, else return error code
@@ -126,7 +226,7 @@ namespace ourChat
                     return error_code[error_inv_input];
 
                 Byte[] temp_byte = System.Text.Encoding.UTF8.GetBytes(command.ToCharArray());
-                netStr.Write(temp_byte, 0, temp_byte.Length);
+                netstr_server.Write(temp_byte, 0, temp_byte.Length);
                 return "ok";
             }
             catch
@@ -144,7 +244,7 @@ namespace ourChat
                 string result = "";
                 while (result.Length == 0)
                 {
-                    strReader.Read(buffer_char, 0, buffer_char.Length);
+                    strReader_server.Read(buffer_char, 0, buffer_char.Length);
                     result = (new string(buffer_char)).Replace("\0", "");
                 }
                 return result;
@@ -168,9 +268,27 @@ namespace ourChat
             return GetResponse();
         }
 
-        static void ChatWithFriend(TcpClient fTcp)
+        static void ChatWithFriend()
         {
-            return;
+            int numb = AskNewThread();
+            if (numb == -1)
+                return;
+
+            TcpClient chatTcp = chat_tcp[numb];
+            NetworkStream chatNtr = chatTcp.GetStream();
+            StreamReader chatReader = new StreamReader(chatNtr);
+
+            string check = ReadFromStream(chatReader);
+            if(check == "" || check.Substring(0, 11)!= "c"+my_name)
+            {
+                
+            }
+
+            while(chat_occupied[numb] == true)
+            {
+                
+            }
+
         }
 
         //if successful, return "ok", else return the error code
@@ -207,13 +325,36 @@ namespace ourChat
         static void ListenThread()
         {
             TcpClient chat_obj;
+            Thread chat_thr;
             
-            
-            while(true)
+            while(flag_listening == true)
             {
+                if(! tListener.Pending())
+                    continue;
+                InitChatForm();
+
                 chat_obj = tListener.AcceptTcpClient();
-                
+                //chat_obj = tClient;
+                chat_obj.ReceiveTimeout = 500;
+                chat_occupied.Add(true);
+                chat_notprocess.Add(true);
+                chat_tcp.Add(chat_obj);
+
+                chat_thr = new Thread(new ThreadStart(ChatWithFriend));
+                chat_thread.Add(chat_thr);
+                chat_thr.Start();
+
+                chat_receive.Add("");
+
+                //flag_listen = false;
             }
+
+            tListener.Stop();
+        }
+
+        static void InitChatForm()
+        {
+            return;
         }
     }
 }
