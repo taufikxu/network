@@ -8,6 +8,7 @@ namespace ourChat
 {
     static class Program
     {
+        
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -17,6 +18,13 @@ namespace ourChat
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new mainWindow());
+
+
         }
+
+
+
+
     }
 }
+

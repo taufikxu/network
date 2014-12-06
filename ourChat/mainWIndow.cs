@@ -21,33 +21,15 @@ namespace ourChat
         public mainWindow()
         {
             InitializeComponent();
+            my_name = "2012011514";
 
             InitApp();
-            //chat_notprocess.Add(true);
-            //chat_occupied.Add(true);
-            //chat_tcp.Add(tClient);
 
-            //Byte[] temp_byte = System.Text.Encoding.UTF8.GetBytes("2012011514_net2014");
-            //netStr.Write(temp_byte, 0, temp_byte.Length);
-            string result = CommunicateWithServer("logout2012011514");
-
-            //while (true) ;
-
-        }
-
-        private void strShow_TextChanged(object sender, EventArgs e)
-        {
-            
         }
 
         private void mainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
             CloseApp();
-        }
-
-        private void mainWindow_Load(object sender, EventArgs e)
-        {
-
         }
 
     }
