@@ -17,9 +17,9 @@ namespace ourChat
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new mainWindow());
-
-
+            mainWindow main = new mainWindow();
+            if(main != null && main.IsDisposed == false)
+                Application.Run(main);
         }
 
 

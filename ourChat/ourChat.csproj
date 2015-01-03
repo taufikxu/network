@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{92E712D1-1185-4DA5-AA6F-BAA337985A1D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ourChat</RootNamespace>
+    <AssemblyName>ourChat</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <PublishUrl>发布\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AForge.Controls, Version=2.2.5.0, Culture=neutral, PublicKeyToken=a8ac264d1dc6b9d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\AForge.NET\Framework\Release\AForge.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Imaging, Version=2.2.5.0, Culture=neutral, PublicKeyToken=ba8ddea9676ca48b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\AForge.NET\Framework\Release\AForge.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cbfb6e07d173c401, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\AForge.NET\Framework\Release\AForge.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShow, Version=2.2.5.0, Culture=neutral, PublicKeyToken=61ea4348d43881b7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\AForge.NET\Framework\Release\AForge.Video.DirectShow.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.SilverlightPlatform, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="chatForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="chatForm.Designer.cs">
+      <DependentUpon>chatForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="chatGroupWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="chatGroupWindow.Designer.cs">
+      <DependentUpon>chatGroupWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="chatgroup_Add.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="chatgroup_Add.Designer.cs">
+      <DependentUpon>chatgroup_Add.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IP_Port.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IP_Port.Designer.cs">
+      <DependentUpon>IP_Port.cs</DependentUpon>
+    </Compile>
+    <Compile Include="loginWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="loginWindow.Designer.cs">
+      <DependentUpon>loginWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="mainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainWindow.Designer.cs">
+      <DependentUpon>mainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="screen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="screen.Designer.cs">
+      <DependentUpon>screen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="videoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="videoForm.Designer.cs">
+      <DependentUpon>videoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="xk_cgw_chatfunction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="xk_cw_app.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="xk_cw_chatfunction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="xk_cw_event.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="xk_cw_tcp_application.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="xk_mw_udp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="xk_mw_chatmain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="xk_mw_check.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="xk_mw_function.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="xk_mw_tcp_conf.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="xk_mw_tcp_function.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="xk_mw_thread.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="xk_mw_variable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="xk_mw_tcp_qunliao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="yx_mw_event_button.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="yx_mw_friends.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="yx_mw_friends.Designer.cs">
+      <DependentUpon>yx_mw_friends.cs</DependentUpon>
+    </Compile>
+    <Compile Include="yx_mw_qunliao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="zpl_cw_image_preprocess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="zpl_cw_textbox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="chatForm.resx">
+      <DependentUpon>chatForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="chatGroupWindow.resx">
+      <DependentUpon>chatGroupWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="chatgroup_Add.resx">
+      <DependentUpon>chatgroup_Add.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IP_Port.resx">
+      <DependentUpon>IP_Port.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="loginWindow.jv-Latn.resx">
+      <DependentUpon>loginWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="loginWindow.resx">
+      <DependentUpon>loginWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="loginWindow.zh-CN.resx">
+      <DependentUpon>loginWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="loginWindow.zh-Hans.resx">
+      <DependentUpon>loginWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="loginWindow.zh.resx">
+      <DependentUpon>loginWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="loginWindow.zu.resx">
+      <DependentUpon>loginWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mainWindow.resx">
+      <DependentUpon>mainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="screen.resx">
+      <DependentUpon>screen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="videoForm.resx">
+      <DependentUpon>videoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.1 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sendfile.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sendpic.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cut2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\shake.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\cut2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\sendpic.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\sendfile.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

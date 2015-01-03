@@ -18,18 +18,34 @@ namespace ourChat
     public partial class mainWindow : Form
     {
 
+
+        public static TreeNode basis;//好友列表的根节点
+        public static TreeNode[] friends;//好友节点数组
+
+        List<string> friend_list;
+
         public mainWindow()
         {
             InitializeComponent();
-            my_name = "2012011514";
-
+            
             InitApp();
+
+            udp_numb = 0;
+            friend_list = new List<string>();
+            chatForm_list = new List<chatForm>(0);
+            chatGroup_list = new List<chatGroupWindow>(0);
 
         }
 
-        private void mainWindow_FormClosed(object sender, FormClosedEventArgs e)
+        private void mainWindow_KeyPress(object sender, KeyPressEventArgs e)
         {
-            CloseApp();
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                if (this.ActiveControl == textBox_search)
+                {
+                    pictureBox3_Click(sender, e);
+                }
+            }
         }
 
     }
